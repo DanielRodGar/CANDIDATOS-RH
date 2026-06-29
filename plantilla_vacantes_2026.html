@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -384,8 +385,7 @@ async function loadState() {
     state = {};
     rows.forEach(row => {
       if (row.Regional && row.Sucursal && row.Puesto_idx !== undefined && row.Estado) {
-        const k = key(row.Regional, row.Sucursal, row.Puesto_idx);
-        state[k] = row.Estado.toLowerCase();
+        state[row.Puesto_idx] = row.Estado.toLowerCase();
       }
     });
   } catch(e) {
