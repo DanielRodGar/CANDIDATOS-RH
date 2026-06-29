@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Plantilla 2026 — Vacantes y Recambios</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f0f2f5;
+    color: #1a1a1a;
+    min-height: 100vh;
+  }
+
+  header {
+    background: #1a2744;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  header h1 { font-size: 1rem; font-weight: 600; letter-spacing: 0.5px; }
+  header p  { font-size: 0.75rem; color: #8fa3c8; margin-top: 2px; }
+
+  .header-stats {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-pill {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  .stat-pill strong { font-size: 0.85rem; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  .filters {
+    background: #fff;
+    border-bottom: 1px solid #e2e6ec;
+    padding: 0.6rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .filters label { font-size: 0.75rem; color: #666; font-weight: 500; }
+
+  .filters select {
+    font-size: 0.75rem;
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+    padding: 4px 8px;
+    background: #fff;
+    cursor: pointer;
+    color: #1a1a1a;
+  }
+
+  .filters .sep { color: #ccc; }
+
+  .legend {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-left: auto;
+  }
+
+  .leg-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.7rem;
+    color: #555;
+  }
+
+  .leg-dot { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }
+
+  main { padding: 1.25rem 1.5rem; max-width: 1400px; margin: 0 auto; }
+
+  .regional-block {
+    margin-bottom: 2rem;
+  }
+
+  .regional-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #1a2744;
+  }
+
+  .regional-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a2744;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .regional-badge {
+    font-size: 0.7rem;
+    background: #e8ecf5;
+    color: #3a5199;
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-weight: 600;
+  }
+
+  .regional-pct {
+    margin-left: auto;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #444;
+  }
+
+  .sucursales-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .sucursal-card {
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid #e2e6ec;
+    overflow: hidden;
+  }
+
+  .sucursal-head {
+    padding: 0.6rem 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #1e3a6e;
+    color: #fff;
+  }
+
+  .sucursal-name {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
+
+  .pct-badge {
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: 12px;
+    padding: 2px 8px;
+    min-width: 44px;
+    text-align: center;
+  }
+
+  .pct-100  { background: #c8f0d4; color: #1a5e2e; }
+  .pct-high { background: #fff3cc; color: #7a5200; }
+  .pct-low  { background: #ffe0e0; color: #8b0000; }
+
+  .progress-bar-wrap {
+    height: 4px;
+    background: #e8ecf5;
+  }
+
+  .progress-bar {
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+
+  .bar-100  { background: #34c759; }
+  .bar-high { background: #ffcc00; }
+  .bar-low  { background: #ff3b30; }
+
+  .puestos-list {
+    padding: 0.4rem 0;
+  }
+
+  .puesto-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 0.6rem;
+    gap: 0.4rem;
+    border-bottom: 1px solid #f5f5f5;
+    min-height: 24px;
+  }
+
+  .puesto-row:last-child { border-bottom: none; }
+
+  .puesto-num {
+    font-size: 0.62rem;
+    color: #aab;
+    font-weight: 600;
+    min-width: 14px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .puesto-name {
+    font-size: 0.68rem;
+    color: #333;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .estado-select {
+    font-size: 0.62rem;
+    border: 1px solid #dde1e9;
+    border-radius: 4px;
+    padding: 1px 3px;
+    cursor: pointer;
+    font-weight: 600;
+    min-width: 95px;
+    text-align: center;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23999'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    padding-right: 15px;
+    transition: all 0.15s;
+  }
+
+  .estado-cubierto    { background: #f0f8f1; color: #1a5e2e; border-color: #b7dfc0; }
+  .estado-vacante     { background: #fff0f0; color: #8b0000; border-color: #f5b8b8; }
+  .estado-recambio    { background: #fffbe6; color: #7a5200; border-color: #f5e07a; }
+  .estado-nuevo       { background: #f0fff0; color: #1a5e1a; border-color: #8fd98f; }
+  .estado-incapacidad { background: #f5f0ff; color: #4a1f8f; border-color: #c4a8f5; }
+
+  .sucursal-footer {
+    padding: 0.4rem 0.8rem;
+    background: #f8f9fc;
+    border-top: 1px solid #edf0f5;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .mini-stat {
+    font-size: 0.65rem;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-weight: 600;
+    display: none;
+  }
+
+  .ms-vacante     { background: #fff0f0; color: #8b0000; }
+  .ms-recambio    { background: #fffbe6; color: #7a5200; }
+  .ms-nuevo       { background: #f0fff0; color: #1a5e1a; }
+  .ms-incapacidad { background: #f5f0ff; color: #4a1f8f; }
+
+  .save-btn {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: #1a2744;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 0.7rem 1.2rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.2s;
+    z-index: 50;
+  }
+
+  .save-btn:hover { background: #253760; }
+  .save-btn.saved { background: #1a6e3a; }
+
+  .toast {
+    position: fixed;
+    bottom: 5rem;
+    right: 1.5rem;
+    background: #1a6e3a;
+    color: #fff;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    display: none;
+    z-index: 200;
+  }
+
+  @media (max-width: 600px) {
+    main { padding: 1rem; }
+    .sucursales-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>ACEREXPRESS — Plantilla 2026</h1>
+    <p>Vacantes · Recambios · Incapacidades</p>
+  </div>
+  <div class="header-stats" id="header-stats"></div>
+</header>
+
+<div class="filters">
+  <label>Regional:</label>
+  <select id="filter-regional" onchange="applyFilter()">
+    <option value="">Todos</option>
+    <option>ALEJANDRA</option>
+    <option>MARIBEL</option>
+    <option>ERICK</option>
+    <option>MILTON</option>
+  </select>
+  <span class="sep">|</span>
+  <label>Ver:</label>
+  <select id="filter-estado" onchange="applyFilter()">
+    <option value="">Todos los puestos</option>
+    <option value="vacante">Solo vacantes</option>
+    <option value="recambio">Solo recambios</option>
+    <option value="incapacidad">Solo incapacidades</option>
+    <option value="nuevo">Solo nuevos ingresos</option>
+  </select>
+  <span class="sep">|</span>
+  <div class="legend">
+    <span class="leg-item"><span class="leg-dot" style="background:#34c759"></span>Cubierto</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#ff3b30"></span>Vacante</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#ffcc00"></span>Recambio</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#30d158"></span>Nuevo ingreso</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#bf5af2"></span>Incapacidad</span>
+  </div>
+</div>
+
+<main id="main"></main>
+
+<button class="save-btn" onclick="guardar()" id="save-btn">
+  💾 Guardar cambios
+</button>
+<div class="toast" id="toast">✓ Guardado correctamente</div>
+
+<script>
+const DATA = [{"regional":"ALEJANDRA","sucursales":[{"name":"MINA","puestos":["JEFE DE SUCURSAL","AUDITOR","ADM/CAJA","MOSTRADOR 1","MOSTRADOR 2","OPERADOR 1 TON","CORTADOR","ALMACEN","ALMACEN","ALMACEN","OPERADOR 3.5 TONS"]},{"name":"COATZACOALCOS","puestos":["JEFE DE SUCURSAL","AUDITOR","ADMINISTRATIVIO","CAJA","MOSTRADOR","OPERADOR 1 TON","OPERADOR 3.5 TON","OPERADOR 10 TON","CORTADOR","OPERADOR GRUA","ALMACEN 1","ALMACEN 2"]},{"name":"ACAYUCAN","puestos":["JEFE DE SUCURSAL","AUDITOR 1","AUDITOR 2","ADMINISTRATIVA","CAJA","MOSTRADOR","MOSTRADOR 2","OPERADOR 1 TON","OPERADOR 3.5 TON","OPERADOR 10 TON","ALMACEN","ALMACEN","CORTADOR","OPERADOR DE GRUA"]},{"name":"SAN ANDRÉS 1","puestos":["JEFE DE SUCURSAL","AUDITOR","ADM/CAJA","MOSTRADOR","OPERADOR 1 TON","COMODIN","CORTADOR"]},{"name":"SAN ANDRÉS CEDI","puestos":["JEFE DE SUCURSAL","AUDITOR","AUDITOR 2","ADMINISTRATIVO","CAJA","MOSTRADOR","OPERADOR 1 TON","OPERADOR 3.5 TON","OPERADOR 10 TON","ALMACEN","OPERADOR GRUA","CORTADOR"]},{"name":"COATZACOALCOS 2","puestos":["JEFE DE SUCURSAL","AUDITOR","ADM/CAJA","OPERADOR GRUA","COMODIN","OPERADOR 3.5 TONS","OPERADOR 12 TONS","ALMACEN 3"]},{"name":"PUEBLA 2","puestos":["JEFE DE SUCURAL","ADM/CAJA","MOSTRADOR","AUDITOR","OPERADOR 1","OPERADOR 3.5 TON","OPERADOR 10 TON","COMODIN","COMODIN","OPERADOR 1"]}]},{"regional":"MARIBEL","sucursales":[{"name":"SUR","puestos":["JEFE DE SUCURAL","ADMINISTRATIVO","CAJERA","MOSTRADOR 1","MOSTRADOR 2","AUDITOR","OPERADOR 1","OPERADOR 3.5 TON","ALMACEN","ALMACEN","CORTADOR"]},{"name":"CENTRO","puestos":["JEFE DE SUCURSAL","ADMINISTRATIVO","CAJERO","MOSTRADOR","MOSTRADOR 2","AUDITOR","OPERADOR 1","OPERADOR 3.5 TON","ALMACEN","ALMACEN","TROQUELADOR","CORTADOR"]},{"name":"TEJERIA","puestos":["JEFE DE SUCURSAL","ADMINISTRATIVO","MOSTRADOR","AUDITOR","COMODIN","CORTADOR","ALMACEN","OPERADOR 1 TON","CAJERA","OPERADOR 3.5 TONS"]},{"name":"GOLFO","puestos":["JEFE DE SUCURSAL","ADM/CAJERO","MOSTRADOR","AUDITOR","COMODIN","CORTADOR","OPERADOR 1 TON","ALMACEN"]},{"name":"ACEROFERTAS","puestos":["JEFE DE SUCURSAL","ADM/CAJERO","MOSTRADOR","AUDITOR","COMODIN","OPERADOR 1 TON","CORTADOR"]},{"name":"CARDEL","puestos":["JEFE DE SUCURSAL","ADM/CAJERO","MOSTRADOR","AUDITOR","OPERADOR 3.5","OPERADOR1 TON","CORTADOR","ALMACEN"]},{"name":"TIERRABLANCA","puestos":["JEFE DE SUCURSAL","ADM/CAJA","AUDITOR","MOSTRADOR","ALMACÉN","CORTADOR","OPERADOR NISSAN","OPERADOR 3.5","ALMACEN"]},{"name":"TUXTEPEC","puestos":["JEFE DE SUCURSAL","ADM/CAJA","AUDITOR","MOSTRADOR","ALMACEN","CORTADOR","OPERADOR 1","OPERADOR 3.5","ALMACEN"]},{"name":"COSAMALOAPAN","puestos":["JEFE DE SUCURSAL","ADM/CAJA","AUDITOR","MOSTRADOR","COMODIN","OPERADOR 1 TON","CORTADOR"]},{"name":"TUXTEPEC 2","puestos":["JEFE DE SUCURSAL","ADM/CAJA","MOSTRADOR","AUDITOR","OPERADOR 1 TON","ALMACEN","OPERADOR 10 TONS","ALMACEN","MONTACARGAS","CORTADOR"]}]},{"regional":"ERICK","sucursales":[{"name":"TUXTLA 3","puestos":["JEFE DE SUCURAL","ADM/CAJERA","MOSTRADOR","AUDITOR","OPERADOR 1","OPERADOR 3.5 TON","OPERADOR 10 TON","COMODIN","ALMACEN","CORTADOR"]},{"name":"VILLA 1","puestos":["JEFE DE SUCURAL","ADM/CAJERA","MOSTRADOR 1","AUDITOR","OPERADOR 1","OPERADOR 3.5 TON","CORTADOR","COMODIN","ALMACEN"]},{"name":"VILLA 2","puestos":["JEFE DE SUCURAL","ADM/CAJERA","MOSTRADOR","AUDITOR","OPERADOR 1 TON","OPERADOR 10 TON","COMODIN","CORTADOR","ALMACEN"]},{"name":"TUXTLA 1","puestos":["JEFE DE SUCURAL","ADM/CAJERA","MOSTRADOR","AUDITOR","OPERADOR 1 TON","COMODIN","CORTADOR","ALMACEN"]},{"name":"TUXTLA 2","puestos":["JEFE DE SUCURAL","ADM/CAJERA","MOSTRADOR","AUDITOR","OPERADOR","COMODIN","CORTADOR","ALMACEN"]},{"name":"CARDENAS","puestos":["JEFE DE SUCURAL","ADM/CAJERA","MOSTRADOR","AUDITOR","OPERADOR 3.5 TON","OPERADOR 1 TON","COMODIN","CORTADOR","AUX ALMACEN"]},{"name":"COMALCALCO","puestos":["JEFE DE SUCURAL","ADM/CAJERA","MOSTRADOR","AUDITOR","OPERADOR 1","OPERADOR 3.5 TON","CORTADOR","COMODIN","OPERADOR 10 TON","ALMACEN"]},{"name":"MÉRIDA 1","puestos":["JEFE DE SUCURSAL","AUDITOR","ADM/CAJA","MOSTRADOR","COMODIN","OPERADOR 1TON","OPERADOR 1 3.5 TON","OPERADOR 2 3.5 TON","OPERADOR 10 TON","OPERADOR 20 TON","ALMACEN 1","ALMACEN 2"]},{"name":"MÉRIDA 2","puestos":["JEFE DE SUCURSAL","AUDITOR","ADM/CAJA","MOSTRADOR","OPERADOR","COMODIN","ALMACEN","OPERADOR 3.5"]},{"name":"MÉRIDA 3","puestos":["JEFE DE SUCURSAL","AUDITOR","ADM/CAJA","MOSTRADOR","OPERADOR 1 TON","COMODIN","ALMACEN"]},{"name":"MÉRIDA 4","puestos":["JEFE DE SUCURSAL","AUDITOR","ADM/CAJA","MOSTRADOR","OPERADOR 1 TON","COMODIN","ALMACEN","ALMACEN"]},{"name":"CANCÚN","puestos":["JEFE DE SUCURSAL","AUDITOR","ADM/CAJA","MOSTRADOR","COMODIN","CORTADOR","OPERADOR 1 TON","OPERADOR 3.5 TON","OPERADOR 10 TON"]},{"name":"PLAY DEL CARMEN","puestos":["JEFE DE SUCURSAL","AUDITOR","ADM/CAJA","MOSTRADOR","COMODIN","OPERADOR 1 TON","ALMACEN","ALMACEN"]}]},{"regional":"MILTON","sucursales":[{"name":"CORDOBA CEDI","puestos":["JEFE DE SUCURSAL","AUDITOR","ADM/CAJA","MOSTRADOR","OPERADOR 1 TON","OPERADOR 3.5 TON","OPERADOR 20 TON","CORTADOR","ALMACEN","ALMACEN","ALMACEN"]},{"name":"CORDOBA2","puestos":["JEFE DE SUCURSAL","AUDITOR","ADM/CAJA","MOSTRADOR","OPERADOR 1 TON","COMODIN"]},{"name":"ORIZABA 1","puestos":["JEFE DE SUCURSAL","AUDITOR","ADM/CAJA","MOSTRADOR","OPERADOR 1 TON","OPERADOR 3.5 TON","OPERADOR 10 TON","COMODIN","ALMACEN","CORTADOR"]},{"name":"ORIZABA 2","puestos":["JEFE DE SUCURSAL","AUDITOR","ADM/CAJA","MOSTRADOR","OPERADOR 1 TON","COMODIN","ALMACEN"]},{"name":"XALAPA","puestos":["JEFE DE SUCURSAL","ADM/CAJA","AUDITOR","MOSTRADOR","OPERADOR 1","OPERADOR 3.5 TON","COMODIN","CORTADOR"]},{"name":"POZA RICA","puestos":["JEFE DE SUCURSAL","ADM/CAJA","AUDITOR","MOSTRADOR","OPERADOR 1","OPERADOR 3.5 TON","COMODIN","ALMACEN","CORTADOR"]}]}];
+
+const ESTADOS = [
+  { val: 'cubierto',    label: 'Cubierto',      cls: 'estado-cubierto' },
+  { val: 'vacante',     label: '🔴 Vacante',     cls: 'estado-vacante' },
+  { val: 'recambio',   label: '🟡 Recambio',    cls: 'estado-recambio' },
+  { val: 'nuevo',      label: '🟢 Nuevo ingreso',cls: 'estado-nuevo' },
+  { val: 'incapacidad',label: '🟣 Incapacidad', cls: 'estado-incapacidad' },
+];
+
+const URL_LEER    = 'https://danielrodriguez.app.n8n.cloud/webhook/plantilla-leer';
+const URL_GUARDAR = 'https://danielrodriguez.app.n8n.cloud/webhook/plantilla-guardar';
+
+let state = {};
+let pendingChanges = {};
+
+function key(regional, sucursal, idx) {
+  return `${regional}||${sucursal}||${idx}`;
+}
+
+async function loadState() {
+  try {
+    const res = await fetch(URL_LEER);
+    const rows = await res.json();
+    state = {};
+    rows.forEach(row => {
+      if (row.Regional && row.Sucursal && row.Puesto_idx !== undefined && row.Estado) {
+        const k = key(row.Regional, row.Sucursal, row.Puesto_idx);
+        state[k] = row.Estado.toLowerCase();
+      }
+    });
+  } catch(e) {
+    console.warn('No se pudo cargar el estado desde n8n:', e);
+  }
+}
+
+async function guardar() {
+  if (Object.keys(pendingChanges).length === 0) return;
+  const btn = document.getElementById('save-btn');
+  const toast = document.getElementById('toast');
+  btn.disabled = true;
+  btn.textContent = '⏳ Guardando...';
+  try {
+    await Promise.all(Object.entries(pendingChanges).map(([k, payload]) =>
+      fetch(URL_GUARDAR, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+    ));
+    pendingChanges = {};
+    btn.classList.add('saved');
+    btn.textContent = '✓ Guardado';
+    toast.style.display = 'block';
+    setTimeout(() => {
+      btn.classList.remove('saved');
+      btn.disabled = false;
+      btn.innerHTML = '💾 Guardar cambios';
+      toast.style.display = 'none';
+    }, 2000);
+  } catch(e) {
+    btn.disabled = false;
+    btn.innerHTML = '💾 Guardar cambios';
+    alert('Error al guardar. Verifica tu conexión.');
+  }
+}
+
+function getPct(regional, sucursal) {
+  const block = DATA.find(b => b.regional === regional);
+  const suc = block.sucursales.find(s => s.name === sucursal);
+  const total = suc.puestos.length;
+  let cubiertos = 0;
+  suc.puestos.forEach((_, i) => {
+    const k = key(regional, sucursal, i);
+    const v = state[k] || 'cubierto';
+    if (v !== 'vacante' && v !== 'incapacidad') cubiertos++;
+  });
+  return { pct: Math.round((cubiertos / total) * 100), cubiertos, total };
+}
+
+function pctClass(pct) {
+  if (pct === 100) return { badge: 'pct-100', bar: 'bar-100' };
+  if (pct >= 75)   return { badge: 'pct-high', bar: 'bar-high' };
+  return { badge: 'pct-low', bar: 'bar-low' };
+}
+
+function countByEstado(regional, sucursal, puestos) {
+  const counts = { vacante:0, recambio:0, nuevo:0, incapacidad:0 };
+  puestos.forEach((_, i) => {
+    const v = state[key(regional, sucursal, i)];
+    if (v && v !== 'cubierto') counts[v]++;
+  });
+  return counts;
+}
+
+function onSelectChange(sel, regional, sucursal, idx) {
+  const k = key(regional, sucursal, idx);
+  state[k] = sel.value;
+  sel.className = 'estado-select ' + ESTADOS.find(e => e.val === sel.value).cls;
+
+  // Buscar nombre del puesto
+  const block = DATA.find(b => b.regional === regional);
+  const suc = block.sucursales.find(s => s.name === sucursal);
+  const puesto_nombre = suc.puestos[idx];
+
+  pendingChanges[k] = {
+    regional,
+    sucursal,
+    puesto_idx: `${regional}||${sucursal}||${idx}`,
+    puesto_nombre,
+    estado: sel.value
+  };
+
+  refreshCard(regional, sucursal);
+  refreshHeaderStats();
+}
+
+function refreshCard(regional, sucursal) {
+  const block = DATA.find(b => b.regional === regional);
+  const suc = block.sucursales.find(s => s.name === sucursal);
+  const { pct } = getPct(regional, sucursal);
+  const cls = pctClass(pct);
+
+  const cardId = `card-${regional}-${sucursal}`.replace(/\s/g,'-').replace(/[^a-zA-Z0-9-]/g,'');
+  const card = document.getElementById(cardId);
+  if (!card) return;
+
+  const badge = card.querySelector('.pct-badge');
+  badge.textContent = pct + '%';
+  badge.className = 'pct-badge ' + cls.badge;
+
+  const bar = card.querySelector('.progress-bar');
+  bar.style.width = pct + '%';
+  bar.className = 'progress-bar ' + cls.bar;
+
+  const counts = countByEstado(regional, sucursal, suc.puestos);
+  const footer = card.querySelector('.sucursal-footer');
+  footer.innerHTML = '';
+  if (counts.vacante)     footer.innerHTML += `<span class="mini-stat ms-vacante" style="display:inline-block">${counts.vacante} vacante${counts.vacante>1?'s':''}</span>`;
+  if (counts.recambio)    footer.innerHTML += `<span class="mini-stat ms-recambio" style="display:inline-block">${counts.recambio} recambio${counts.recambio>1?'s':''}</span>`;
+  if (counts.nuevo)       footer.innerHTML += `<span class="mini-stat ms-nuevo" style="display:inline-block">${counts.nuevo} nuevo${counts.nuevo>1?'s':''}</span>`;
+  if (counts.incapacidad) footer.innerHTML += `<span class="mini-stat ms-incapacidad" style="display:inline-block">${counts.incapacidad} incapacidad${counts.incapacidad>1?'es':''}</span>`;
+
+  refreshRegional(regional);
+}
+
+function refreshRegional(regional) {
+  const block = DATA.find(b => b.regional === regional);
+  let total = 0, cubiertos = 0;
+  block.sucursales.forEach(suc => {
+    const r = getPct(regional, suc.name);
+    total += r.total;
+    cubiertos += r.cubiertos;
+  });
+  const pct = Math.round((cubiertos/total)*100);
+  const el = document.getElementById(`rpct-${regional}`);
+  if (el) el.textContent = `${pct}% cobertura · ${total - cubiertos} posiciones abiertas`;
+}
+
+function refreshHeaderStats() {
+  let total = 0, cubiertos = 0, vacantes = 0;
+  DATA.forEach(block => {
+    block.sucursales.forEach(suc => {
+      suc.puestos.forEach((_, i) => {
+        total++;
+        const v = state[key(block.regional, suc.name, i)];
+        if (!v || v === 'cubierto') cubiertos++;
+        if (v === 'vacante') vacantes++;
+      });
+    });
+  });
+  const pct = Math.round((cubiertos/total)*100);
+  document.getElementById('header-stats').innerHTML = `
+    <span class="stat-pill"><span class="dot" style="background:#fff"></span><strong>${pct}%</strong> cobertura</span>
+    <span class="stat-pill"><span class="dot" style="background:#ff5f5f"></span><strong>${vacantes}</strong> vacantes</span>
+    <span class="stat-pill"><span class="dot" style="background:#fff"></span>${total} puestos</span>
+  `;
+}
+
+function buildCard(regional, sucursal, puestos) {
+  const { pct } = getPct(regional, sucursal);
+  const cls = pctClass(pct);
+  const counts = countByEstado(regional, sucursal, puestos);
+  const cardId = `card-${regional}-${sucursal}`.replace(/\s/g,'-').replace(/[^a-zA-Z0-9-]/g,'');
+
+  const footerParts = [];
+  if (counts.vacante)     footerParts.push(`<span class="mini-stat ms-vacante" style="display:inline-block">${counts.vacante} vacante${counts.vacante>1?'s':''}</span>`);
+  if (counts.recambio)    footerParts.push(`<span class="mini-stat ms-recambio" style="display:inline-block">${counts.recambio} recambio${counts.recambio>1?'s':''}</span>`);
+  if (counts.nuevo)       footerParts.push(`<span class="mini-stat ms-nuevo" style="display:inline-block">${counts.nuevo} nuevo${counts.nuevo>1?'s':''}</span>`);
+  if (counts.incapacidad) footerParts.push(`<span class="mini-stat ms-incapacidad" style="display:inline-block">${counts.incapacidad} incapacidad${counts.incapacidad>1?'es':''}</span>`);
+
+  const puestosHTML = puestos.map((p, i) => {
+    const k = key(regional, sucursal, i);
+    const val = state[k] || 'cubierto';
+    const estadoObj = ESTADOS.find(e => e.val === val);
+    const optsHTML = ESTADOS.map(e =>
+      `<option value="${e.val}"${e.val===val?' selected':''}>${e.label}</option>`
+    ).join('');
+    return `<div class="puesto-row" data-estado="${val}">
+      <span class="puesto-num">${i+1}</span>
+      <span class="puesto-name" title="${p}">${p}</span>
+      <select class="estado-select ${estadoObj.cls}" onchange="onSelectChange(this,'${regional}','${sucursal}',${i})">${optsHTML}</select>
+    </div>`;
+  }).join('');
+
+  return `<div class="sucursal-card" id="${cardId}">
+    <div class="sucursal-head">
+      <div>
+        <span class="sucursal-name">${sucursal}</span>
+        <span style="font-size:0.62rem;color:#8fa3c8;margin-left:6px">${puestos.length} empleados</span>
+      </div>
+      <span class="pct-badge ${cls.badge}">${pct}%</span>
+    </div>
+    <div class="progress-bar-wrap"><div class="progress-bar ${cls.bar}" style="width:${pct}%"></div></div>
+    <div class="puestos-list">${puestosHTML}</div>
+    <div class="sucursal-footer">${footerParts.join('')}</div>
+  </div>`;
+}
+
+function render() {
+  const main = document.getElementById('main');
+  main.innerHTML = DATA.map(block => {
+    let tot = 0, cub = 0;
+    block.sucursales.forEach(s => { const r = getPct(block.regional, s.name); tot += r.total; cub += r.cubiertos; });
+    const rpct = Math.round((cub/tot)*100);
+
+    return `<div class="regional-block" data-regional="${block.regional}">
+      <div class="regional-header">
+        <span class="regional-name">${block.regional}</span>
+        <span class="regional-badge">${block.sucursales.length} sucursales</span>
+        <span class="regional-pct" id="rpct-${block.regional}">${rpct}% cobertura · ${tot-cub} posiciones abiertas</span>
+      </div>
+      <div class="sucursales-grid">
+        ${block.sucursales.map(s => buildCard(block.regional, s.name, s.puestos)).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function applyFilter() {
+  const reg = document.getElementById('filter-regional').value;
+  const est = document.getElementById('filter-estado').value;
+
+  document.querySelectorAll('.regional-block').forEach(block => {
+    const r = block.dataset.regional;
+    block.style.display = (reg && r !== reg) ? 'none' : '';
+    block.querySelectorAll('.puesto-row').forEach(row => {
+      const matches = !est || row.dataset.estado === est;
+      row.style.display = matches ? '' : 'none';
+    });
+  });
+}
+
+async function init() {
+  document.getElementById('main').innerHTML = '<p style="text-align:center;padding:3rem;color:#666">⏳ Cargando plantilla...</p>';
+  await loadState();
+  render();
+  refreshHeaderStats();
+}
+
+init();
+</script>
+</body>
+</html>
