@@ -293,10 +293,10 @@
         <div class="error-msg">Selecciona una opción</div>
       </div>
  
-      <div class="field">
+      <div class="field" id="bloquePagoInfonavit" style="display:none;">
         <label>Pago mensual de Infonavit</label>
         <input type="number" name="pago_infonavit" min="0">
-        <div class="hint">Solo si aplica. Si no, deja en 0.</div>
+        <div class="hint">Monto que pagas mensualmente por tu crédito.</div>
       </div>
  
       <div class="field">
@@ -344,6 +344,14 @@
         <div class="error-msg">Selecciona un estado</div>
       </div>
  
+      <div class="field" id="municipioField" style="display:none;">
+        <label>¿En qué municipio vives?</label>
+        <select name="municipio" id="municipioSelect">
+          <option value="">Selecciona...</option>
+        </select>
+        <div class="error-msg">Selecciona un municipio</div>
+      </div>
+ 
       <div class="field" id="sucursalField">
         <label>Sucursal</label>
         <select name="sucursal" id="sucursalSelect" required>
@@ -355,17 +363,7 @@
       <div class="field">
         <label>¿A qué puesto te interesas?</label>
         <select name="puesto" id="puestoSelect" required>
-          <option value="">Selecciona...</option>
-          <option>Chofer 1 Ton</option>
-          <option>Chofer 3.5 Tons</option>
-          <option>Chofer Rabón</option>
-          <option>Chofer Tortón</option>
-          <option>Chofer 20 Tons</option>
-          <option>Auxiliar de Almacén</option>
-          <option>Mostrador</option>
-          <option>Cajera / Administrativa</option>
-          <option>Cortador</option>
-          <option>Gruero</option>
+          <option value="">Primero elige una sucursal...</option>
         </select>
         <div class="error-msg">Selecciona un puesto</div>
       </div>
@@ -415,6 +413,41 @@
           <div class="radio-opt"><input type="radio" name="transporte" value="Vehículo propio" id="t2"><label for="t2">Vehículo propio</label></div>
           <div class="radio-opt"><input type="radio" name="transporte" value="Motocicleta" id="t3"><label for="t3">Motocicleta</label></div>
           <div class="radio-opt"><input type="radio" name="transporte" value="A pie / bicicleta" id="t4"><label for="t4">A pie / bicicleta</label></div>
+        </div>
+        <div class="error-msg">Selecciona una opción</div>
+      </div>
+ 
+      <div class="field">
+        <label>¿Cuánto tiempo tardas en llegar a la sucursal desde tu domicilio?</label>
+        <div class="radio-group" data-name="tiempo_traslado">
+          <div class="radio-opt"><input type="radio" name="tiempo_traslado" value="Menos de 30 min" id="tt1"><label for="tt1">Menos de 30 min</label></div>
+          <div class="radio-opt"><input type="radio" name="tiempo_traslado" value="30 a 60 min" id="tt2"><label for="tt2">30 a 60 min</label></div>
+          <div class="radio-opt"><input type="radio" name="tiempo_traslado" value="1 a 2 horas" id="tt3"><label for="tt3">1 a 2 horas</label></div>
+          <div class="radio-opt"><input type="radio" name="tiempo_traslado" value="Más de 2 horas" id="tt4"><label for="tt4">Más de 2 horas</label></div>
+        </div>
+        <div class="error-msg">Selecciona una opción</div>
+      </div>
+ 
+      <div class="field">
+        <label>¿Cuánto tiempo estuviste en tu último empleo?</label>
+        <div class="radio-group" data-name="tiempo_ultimo_empleo">
+          <div class="radio-opt"><input type="radio" name="tiempo_ultimo_empleo" value="Menos de 1 año" id="tue2"><label for="tue2">Menos de 1 año</label></div>
+          <div class="radio-opt"><input type="radio" name="tiempo_ultimo_empleo" value="1 a 2 años" id="tue4"><label for="tue4">1 a 2 años</label></div>
+          <div class="radio-opt"><input type="radio" name="tiempo_ultimo_empleo" value="2 a 5 años" id="tue5"><label for="tue5">2 a 5 años</label></div>
+          <div class="radio-opt"><input type="radio" name="tiempo_ultimo_empleo" value="Más de 5 años" id="tue6"><label for="tue6">Más de 5 años</label></div>
+        </div>
+        <div class="error-msg">Selecciona una opción</div>
+      </div>
+ 
+      <div class="field">
+        <label>¿Por qué motivo dejaste tu último empleo?</label>
+        <div class="radio-group" data-name="motivo_salida_ultimo_empleo">
+          <div class="radio-opt"><input type="radio" name="motivo_salida_ultimo_empleo" value="Terminó mi contrato o temporada" id="ms1"><label for="ms1">Terminó mi contrato o temporada</label></div>
+          <div class="radio-opt"><input type="radio" name="motivo_salida_ultimo_empleo" value="Buscaba mejor sueldo o crecimiento" id="ms2"><label for="ms2">Buscaba mejor sueldo o crecimiento</label></div>
+          <div class="radio-opt"><input type="radio" name="motivo_salida_ultimo_empleo" value="Recorte de personal o cierre de la empresa" id="ms3"><label for="ms3">Recorte de personal o cierre de la empresa</label></div>
+          <div class="radio-opt"><input type="radio" name="motivo_salida_ultimo_empleo" value="Renuncié por motivos personales" id="ms4"><label for="ms4">Renuncié por motivos personales</label></div>
+          <div class="radio-opt"><input type="radio" name="motivo_salida_ultimo_empleo" value="Conflictos con jefes o compañeros" id="ms5"><label for="ms5">Conflictos con jefes o compañeros</label></div>
+          <div class="radio-opt"><input type="radio" name="motivo_salida_ultimo_empleo" value="Fui despedido" id="ms6"><label for="ms6">Fui despedido</label></div>
         </div>
         <div class="error-msg">Selecciona una opción</div>
       </div>
@@ -498,10 +531,13 @@
       </div>
  
       <div id="bloqueAlmacen" class="puesto-bloque" style="display:none;">
-        <div class="field"><label>¿Experiencia en almacén?</label>
+        <div class="field"><label>¿Cuánta experiencia tienes en almacén?</label>
           <div class="radio-group" data-name="exp_almacen">
-            <div class="radio-opt"><input type="radio" name="exp_almacen" value="Sí" id="ea1"><label for="ea1">Sí</label></div>
-            <div class="radio-opt"><input type="radio" name="exp_almacen" value="No" id="ea2"><label for="ea2">No</label></div>
+            <div class="radio-opt"><input type="radio" name="exp_almacen" value="Sin experiencia" id="ea0"><label for="ea0">Sin experiencia</label></div>
+            <div class="radio-opt"><input type="radio" name="exp_almacen" value="Menos de 1 año" id="ea1"><label for="ea1">Menos de 1 año</label></div>
+            <div class="radio-opt"><input type="radio" name="exp_almacen" value="1 a 2 años" id="ea2"><label for="ea2">1 a 2 años</label></div>
+            <div class="radio-opt"><input type="radio" name="exp_almacen" value="2 a 5 años" id="ea3"><label for="ea3">2 a 5 años</label></div>
+            <div class="radio-opt"><input type="radio" name="exp_almacen" value="Más de 5 años" id="ea4"><label for="ea4">Más de 5 años</label></div>
           </div>
         </div>
         <div class="field"><label>¿Buena condición física?</label>
@@ -577,16 +613,22 @@
       </div>
  
       <div id="bloqueCortador" class="puesto-bloque" style="display:none;">
-        <div class="field"><label>¿Operas cortadora de banco?</label>
+        <div class="field"><label>¿Cuánta experiencia tienes operando cortadora de banco?</label>
           <div class="radio-group" data-name="opera_cortadora_banco">
-            <div class="radio-opt"><input type="radio" name="opera_cortadora_banco" value="Sí" id="ocb1"><label for="ocb1">Sí</label></div>
-            <div class="radio-opt"><input type="radio" name="opera_cortadora_banco" value="No" id="ocb2"><label for="ocb2">No</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_cortadora_banco" value="Sin experiencia" id="ocb0"><label for="ocb0">Sin experiencia</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_cortadora_banco" value="Menos de 1 año" id="ocb1"><label for="ocb1">Menos de 1 año</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_cortadora_banco" value="1 a 2 años" id="ocb2"><label for="ocb2">1 a 2 años</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_cortadora_banco" value="2 a 5 años" id="ocb3"><label for="ocb3">2 a 5 años</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_cortadora_banco" value="Más de 5 años" id="ocb4"><label for="ocb4">Más de 5 años</label></div>
           </div>
         </div>
-        <div class="field"><label>¿Operas soplete de corte?</label>
+        <div class="field"><label>¿Cuánta experiencia tienes operando soplete de corte?</label>
           <div class="radio-group" data-name="opera_soplete">
-            <div class="radio-opt"><input type="radio" name="opera_soplete" value="Sí" id="osp1"><label for="osp1">Sí</label></div>
-            <div class="radio-opt"><input type="radio" name="opera_soplete" value="No" id="osp2"><label for="osp2">No</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_soplete" value="Sin experiencia" id="osp0"><label for="osp0">Sin experiencia</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_soplete" value="Menos de 1 año" id="osp1"><label for="osp1">Menos de 1 año</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_soplete" value="1 a 2 años" id="osp2"><label for="osp2">1 a 2 años</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_soplete" value="2 a 5 años" id="osp3"><label for="osp3">2 a 5 años</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_soplete" value="Más de 5 años" id="osp4"><label for="osp4">Más de 5 años</label></div>
           </div>
         </div>
         <div class="field"><label>¿Buena condición física?</label>
@@ -633,6 +675,68 @@
         </div>
       </div>
  
+      <div id="bloqueTroquelador" class="puesto-bloque" style="display:none;">
+        <div class="field"><label>¿Cuánta experiencia tienes operando troqueladora o máquina de corte similar?</label>
+          <div class="radio-group" data-name="opera_troqueladora">
+            <div class="radio-opt"><input type="radio" name="opera_troqueladora" value="Sin experiencia" id="ot0"><label for="ot0">Sin experiencia</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_troqueladora" value="Menos de 1 año" id="ot1"><label for="ot1">Menos de 1 año</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_troqueladora" value="1 a 2 años" id="ot2"><label for="ot2">1 a 2 años</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_troqueladora" value="2 a 5 años" id="ot3"><label for="ot3">2 a 5 años</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_troqueladora" value="Más de 5 años" id="ot4"><label for="ot4">Más de 5 años</label></div>
+          </div>
+        </div>
+        <div class="field"><label>¿Cuánta experiencia tienes fabricando tira para cortina o producto similar?</label>
+          <div class="radio-group" data-name="exp_tiras_cortina">
+            <div class="radio-opt"><input type="radio" name="exp_tiras_cortina" value="Sin experiencia" id="etc0"><label for="etc0">Sin experiencia</label></div>
+            <div class="radio-opt"><input type="radio" name="exp_tiras_cortina" value="Menos de 1 año" id="etc1"><label for="etc1">Menos de 1 año</label></div>
+            <div class="radio-opt"><input type="radio" name="exp_tiras_cortina" value="1 a 2 años" id="etc2"><label for="etc2">1 a 2 años</label></div>
+            <div class="radio-opt"><input type="radio" name="exp_tiras_cortina" value="2 a 5 años" id="etc3"><label for="etc3">2 a 5 años</label></div>
+            <div class="radio-opt"><input type="radio" name="exp_tiras_cortina" value="Más de 5 años" id="etc4"><label for="etc4">Más de 5 años</label></div>
+          </div>
+        </div>
+        <div class="field"><label>¿Buena condición física?</label>
+          <div class="radio-group" data-name="apto_fisico_troquelador">
+            <div class="radio-opt"><input type="radio" name="apto_fisico_troquelador" value="Sí" id="aft1"><label for="aft1">Sí</label></div>
+            <div class="radio-opt"><input type="radio" name="apto_fisico_troquelador" value="No" id="aft2"><label for="aft2">No</label></div>
+          </div>
+        </div>
+      </div>
+ 
+      <div id="bloqueMontacarguista" class="puesto-bloque" style="display:none;">
+        <div class="field"><label>¿Tienes experiencia operando montacargas?</label>
+          <div class="radio-group" data-name="exp_montacargas">
+            <div class="radio-opt"><input type="radio" name="exp_montacargas" value="Sí" id="emo1"><label for="emo1">Sí</label></div>
+            <div class="radio-opt"><input type="radio" name="exp_montacargas" value="No" id="emo2"><label for="emo2">No</label></div>
+          </div>
+        </div>
+        <div class="field"><label>¿Cuentas con certificación de operador de montacargas?</label>
+          <div class="radio-group" data-name="cert_montacargas">
+            <div class="radio-opt"><input type="radio" name="cert_montacargas" value="Sí" id="cmo1"><label for="cmo1">Sí</label></div>
+            <div class="radio-opt"><input type="radio" name="cert_montacargas" value="No" id="cmo2"><label for="cmo2">No</label></div>
+          </div>
+        </div>
+        <div class="field"><label>¿Cuántos años llevas operando montacargas?</label>
+          <div class="radio-group" data-name="anos_montacargas">
+            <div class="radio-opt"><input type="radio" name="anos_montacargas" value="Menos de 1 año" id="amo1"><label for="amo1">Menos de 1 año</label></div>
+            <div class="radio-opt"><input type="radio" name="anos_montacargas" value="1 a 3 años" id="amo2"><label for="amo2">1 a 3 años</label></div>
+            <div class="radio-opt"><input type="radio" name="anos_montacargas" value="3 a 5 años" id="amo3"><label for="amo3">3 a 5 años</label></div>
+            <div class="radio-opt"><input type="radio" name="anos_montacargas" value="Más de 5 años" id="amo4"><label for="amo4">Más de 5 años</label></div>
+          </div>
+        </div>
+        <div class="field"><label>¿Tienes experiencia en maniobras de carga y descarga?</label>
+          <div class="radio-group" data-name="maniobra_carga_descarga">
+            <div class="radio-opt"><input type="radio" name="maniobra_carga_descarga" value="Sí" id="mcd1"><label for="mcd1">Sí</label></div>
+            <div class="radio-opt"><input type="radio" name="maniobra_carga_descarga" value="No" id="mcd2"><label for="mcd2">No</label></div>
+          </div>
+        </div>
+        <div class="field"><label>¿Buena condición física?</label>
+          <div class="radio-group" data-name="apto_fisico_montacarguista">
+            <div class="radio-opt"><input type="radio" name="apto_fisico_montacarguista" value="Sí" id="afmo1"><label for="afmo1">Sí</label></div>
+            <div class="radio-opt"><input type="radio" name="apto_fisico_montacarguista" value="No" id="afmo2"><label for="afmo2">No</label></div>
+          </div>
+        </div>
+      </div>
+ 
       <div class="field">
         <label>¿Cómo supiste de la vacante?</label>
         <div class="radio-group" data-name="medio_enterado">
@@ -643,6 +747,14 @@
           <div class="radio-opt"><input type="radio" name="medio_enterado" value="Otro" id="me5"><label for="me5">Otro</label></div>
         </div>
         <div class="error-msg">Selecciona una opción</div>
+      </div>
+ 
+      <div class="field">
+        <label>Adjunta tu CV o solicitud de empleo (opcional)</label>
+        <div class="hint" style="margin-bottom:8px;">Formatos permitidos: PDF, Word o imagen. Máximo 5 MB.</div>
+        <input type="file" name="cv_archivo" id="cvInput" accept=".pdf,.doc,.docx,image/*">
+        <div class="hint" id="cvNombreArchivo" style="margin-top:6px;"></div>
+        <div class="error-msg" id="cvError" style="display:none;">El archivo debe pesar menos de 5 MB</div>
       </div>
  
       <div class="nav-buttons">
@@ -683,7 +795,73 @@ const SUCURSALES = {
   "Puebla": ["San Andrés Cholula — San Francisco Acatepec"]
 };
  
-const CHOFERES = ["Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón","Chofer Tortón","Chofer 20 Tons"];
+// Veracruz es donde tenemos más tiendas, así que ahí se pregunta primero el municipio
+// y luego se filtra la sucursal según el municipio elegido.
+const MUNICIPIOS_VERACRUZ = {
+  "Veracruz":          ["Veracruz — Col. Pedro I Mata (Matriz)","Veracruz — Col. Ejido 1ro de Mayo (Sur)","Veracruz — Villa Rica (Golfo)","Veracruz — Col. Artículo 123 (Acerofertas)","Veracruz — Col. Centro","Tejería — Carr. Veracruz-Xalapa"],
+  "José Cardel":       ["José Cardel — Col. Centro"],
+  "Xalapa":            ["Xalapa — Col. Rafael Lucio"],
+  "Acayucan":          ["Acayucan — Barrio Villalta"],
+  "Minatitlán":        ["Minatitlán — Col. Nueva Mina"],
+  "Coatzacoalcos":     ["Coatzacoalcos — Col. Benito Juárez","Coatzacoalcos — Estero del Pantano"],
+  "Cosamaloapan":      ["Cosamaloapan — Col. Centro"],
+  "Córdoba":           ["Córdoba — Zona Industrial","Córdoba — Col. Centro"],
+  "Orizaba":           ["Orizaba — Col. Centro","Orizaba — Col. Abelardo L. Rodríguez"],
+  "San Andrés Tuxtla": ["San Andrés Tuxtla — El Rodeo","San Andrés Tuxtla — Col. 3 de Mayo"],
+  "Tierra Blanca":     ["Tierra Blanca — Col. Hoja del Maíz"],
+  "Poza Rica":         ["Poza Rica — Jardines de Poza Rica"]
+};
+ 
+const CHOFERES = ["Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón","Chofer Tortón"];
+ 
+// Qué puestos existen realmente en cada sucursal (Jefe de Sucursal, Auditor, Comodín
+// quedan fuera de este proceso en todas las sucursales).
+const PUESTOS_POR_SUCURSAL = {
+  // Veracruz
+  "Veracruz — Col. Pedro I Mata (Matriz)":          ["Chofer 3.5 Tons","Chofer Rabón","Chofer Tortón","Auxiliar de Almacén","Cortador","Gruero","Montacarguista"],
+  "Veracruz — Col. Ejido 1ro de Mayo (Sur)":        ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Auxiliar de Almacén","Cortador"],
+  "Veracruz — Villa Rica (Golfo)":                  ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Auxiliar de Almacén"],
+  "Veracruz — Col. Artículo 123 (Acerofertas)":     ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Cortador"],
+  "Veracruz — Col. Centro":                         ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Auxiliar de Almacén","Cortador","Troquelador"],
+  "Tejería — Carr. Veracruz-Xalapa":                ["Mostrador","Cortador","Auxiliar de Almacén","Chofer 1 Ton","Cajera / Administrativa","Chofer 3.5 Tons"],
+  "José Cardel — Col. Centro":                      ["Cajera / Administrativa","Mostrador","Chofer 3.5 Tons","Chofer Rabón","Cortador","Auxiliar de Almacén"],
+  "Xalapa — Col. Rafael Lucio":                     ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Cortador"],
+  "Acayucan — Barrio Villalta":                     ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón","Auxiliar de Almacén","Cortador","Gruero"],
+  "Minatitlán — Col. Nueva Mina":                   ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Auxiliar de Almacén","Cortador"],
+  "Coatzacoalcos — Col. Benito Juárez":             ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón","Cortador","Gruero","Auxiliar de Almacén"],
+  "Coatzacoalcos — Estero del Pantano":             ["Cajera / Administrativa","Chofer 3.5 Tons","Chofer Rabón","Auxiliar de Almacén","Gruero"],
+  "Cosamaloapan — Col. Centro":                     ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Cortador"],
+  "Córdoba — Zona Industrial":                      ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Chofer Tortón","Cortador","Auxiliar de Almacén"],
+  "Córdoba — Col. Centro":                          ["Cajera / Administrativa","Mostrador","Chofer 1 Ton"],
+  "Orizaba — Col. Centro":                          ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón","Auxiliar de Almacén","Cortador"],
+  "Orizaba — Col. Abelardo L. Rodríguez":           ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Auxiliar de Almacén"],
+  "San Andrés Tuxtla — El Rodeo":                   ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Cortador"],
+  "San Andrés Tuxtla — Col. 3 de Mayo":             ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón","Gruero","Auxiliar de Almacén","Cortador"],
+  "Tierra Blanca — Col. Hoja del Maíz":             ["Cajera / Administrativa","Mostrador","Auxiliar de Almacén","Cortador","Chofer 3.5 Tons","Chofer 1 Ton"],
+  "Poza Rica — Jardines de Poza Rica":              ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Auxiliar de Almacén","Cortador"],
+  // Tabasco
+  "Comalcalco — Col. Santa Amalia Zona Industrial": ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón","Cortador","Auxiliar de Almacén"],
+  "Cárdenas — Carretera km 1.6":                    ["Cajera / Administrativa","Mostrador","Chofer 3.5 Tons","Chofer 1 Ton","Cortador","Auxiliar de Almacén"],
+  "Villahermosa — Atasta":                          ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Cortador","Auxiliar de Almacén"],
+  "Villahermosa — Ciudad Industrial":               ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer Rabón","Cortador","Auxiliar de Almacén"],
+  // Chiapas
+  "Tuxtla Gutiérrez — San José Terán":              ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Cortador","Auxiliar de Almacén"],
+  "Tuxtla Gutiérrez — Col. Centro Norte":           ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Cortador","Auxiliar de Almacén"],
+  "Tuxtla Gutiérrez — Loma Larga":                  ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón","Auxiliar de Almacén","Cortador"],
+  // Oaxaca
+  "Tuxtepec — Santa Fe":                            ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Auxiliar de Almacén","Cortador"],
+  "Tuxtepec — Col. del Carmen":                     ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer Rabón","Auxiliar de Almacén","Cortador","Montacarguista"],
+  // Yucatán
+  "Mérida — Ciudad Industrial":                     ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón","Chofer Tortón","Auxiliar de Almacén"],
+  "Mérida — Sambulá":                               ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Auxiliar de Almacén"],
+  "Mérida — El Porvenir":                           ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Auxiliar de Almacén"],
+  "Mérida — Sta. María Chuburná":                   ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Auxiliar de Almacén"],
+  // Quintana Roo
+  "Cancún — Supermanzana 102":                      ["Cajera / Administrativa","Mostrador","Cortador","Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón"],
+  "Playa del Carmen — Gonzalo Guerrero":            ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Auxiliar de Almacén"],
+  // Puebla
+  "San Andrés Cholula — San Francisco Acatepec":    ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón"]
+};
  
 let currentStep = 1;
 const totalSteps = 4;
@@ -747,19 +925,81 @@ document.querySelectorAll('[data-back]').forEach(btn=>{
   });
 });
  
-// Sucursal dinámica según estado
+// Mostrar/ocultar pago mensual de Infonavit según la respuesta de infonavit
+const bloquePagoInfonavit = document.getElementById('bloquePagoInfonavit');
+const pagoInfonavitInput = bloquePagoInfonavit.querySelector('input[name="pago_infonavit"]');
+document.querySelectorAll('input[name="infonavit"]').forEach(radio=>{
+  radio.addEventListener('change', ()=>{
+    if(radio.value === 'Sí' && radio.checked){
+      bloquePagoInfonavit.style.display = 'block';
+      pagoInfonavitInput.setAttribute('required','required');
+    } else if(radio.checked){
+      bloquePagoInfonavit.style.display = 'none';
+      pagoInfonavitInput.removeAttribute('required');
+      pagoInfonavitInput.value = '';
+    }
+  });
+});
+ 
+// Sucursal dinámica según estado (y municipio, cuando el estado es Veracruz)
 const estadoSelect = document.getElementById('estadoSelect');
+const municipioField = document.getElementById('municipioField');
+const municipioSelect = document.getElementById('municipioSelect');
 const sucursalSelect = document.getElementById('sucursalSelect');
+ 
 estadoSelect.addEventListener('change', ()=>{
   const estado = estadoSelect.value;
   sucursalSelect.innerHTML = '';
+  municipioSelect.innerHTML = '';
+ 
   if(!estado){
     sucursalSelect.innerHTML = '<option value="">Primero elige un estado...</option>';
+    municipioField.style.display = 'none';
+    municipioSelect.removeAttribute('required');
     return;
   }
-  const opts = SUCURSALES[estado] || [];
+ 
+  if(estado === 'Veracruz'){
+    // Veracruz tiene más tiendas: primero municipio, luego sucursal
+    municipioField.style.display = 'block';
+    municipioSelect.setAttribute('required','required');
+    municipioSelect.innerHTML = '<option value="">Selecciona...</option>' +
+      Object.keys(MUNICIPIOS_VERACRUZ).map(m=>`<option value="${m}">${m}</option>`).join('');
+    sucursalSelect.innerHTML = '<option value="">Primero elige un municipio...</option>';
+  } else {
+    // Resto de estados: directo a sucursal, sin paso de municipio
+    municipioField.style.display = 'none';
+    municipioSelect.removeAttribute('required');
+    const opts = SUCURSALES[estado] || [];
+    sucursalSelect.innerHTML = '<option value="">Selecciona...</option>' +
+      opts.map(s=>`<option value="${s}">${s}</option>`).join('');
+  }
+});
+ 
+municipioSelect.addEventListener('change', ()=>{
+  const municipio = municipioSelect.value;
+  if(!municipio){
+    sucursalSelect.innerHTML = '<option value="">Primero elige un municipio...</option>';
+    return;
+  }
+  const opts = MUNICIPIOS_VERACRUZ[municipio] || [];
   sucursalSelect.innerHTML = '<option value="">Selecciona...</option>' +
     opts.map(s=>`<option value="${s}">${s}</option>`).join('');
+});
+ 
+// Puesto disponible según la sucursal elegida
+sucursalSelect.addEventListener('change', ()=>{
+  const sucursal = sucursalSelect.value;
+  const puestoSelect = document.getElementById('puestoSelect');
+  puestoSelect.value = '';
+  puestoSelect.dispatchEvent(new Event('change'));
+  if(!sucursal){
+    puestoSelect.innerHTML = '<option value="">Primero elige una sucursal...</option>';
+    return;
+  }
+  const opts = PUESTOS_POR_SUCURSAL[sucursal] || [];
+  puestoSelect.innerHTML = '<option value="">Selecciona...</option>' +
+    opts.map(p=>`<option value="${p}">${p}</option>`).join('');
 });
  
 // Mostrar bloque de preguntas según puesto
@@ -770,7 +1010,9 @@ const bloques = {
   mostrador: document.getElementById('bloqueMostrador'),
   cajera: document.getElementById('bloqueCajera'),
   cortador: document.getElementById('bloqueCortador'),
-  gruero: document.getElementById('bloqueGruero')
+  gruero: document.getElementById('bloqueGruero'),
+  troquelador: document.getElementById('bloqueTroquelador'),
+  montacarguista: document.getElementById('bloqueMontacarguista')
 };
  
 function setRequiredInBlock(blockEl, isRequired){
@@ -803,6 +1045,12 @@ puestoSelect.addEventListener('change', ()=>{
   } else if(puesto === 'Gruero'){
     bloques.gruero.style.display = 'block';
     setRequiredInBlock(bloques.gruero, true);
+  } else if(puesto === 'Troquelador'){
+    bloques.troquelador.style.display = 'block';
+    setRequiredInBlock(bloques.troquelador, true);
+  } else if(puesto === 'Montacarguista'){
+    bloques.montacarguista.style.display = 'block';
+    setRequiredInBlock(bloques.montacarguista, true);
   }
 });
  
@@ -829,13 +1077,60 @@ function validateStep4(){
   return valid;
 }
  
+// Validación del CV opcional (máximo 5 MB)
+const cvInput = document.getElementById('cvInput');
+const cvNombreArchivo = document.getElementById('cvNombreArchivo');
+const cvError = document.getElementById('cvError');
+const MAX_CV_BYTES = 5 * 1024 * 1024;
+ 
+cvInput.addEventListener('change', ()=>{
+  const file = cvInput.files[0];
+  cvError.style.display = 'none';
+  cvNombreArchivo.textContent = '';
+  if(!file) return;
+  if(file.size > MAX_CV_BYTES){
+    cvError.style.display = 'block';
+    cvInput.value = '';
+    return;
+  }
+  cvNombreArchivo.textContent = 'Archivo seleccionado: ' + file.name;
+});
+ 
+function leerArchivoComoBase64(file){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = ()=> resolve(reader.result.split(',')[1] || '');
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+ 
 form.addEventListener('submit', async (e)=>{
   e.preventDefault();
   if(!validateStep4()) return;
  
+  const cvFile = cvInput.files[0];
+  if(cvFile && cvFile.size > MAX_CV_BYTES){
+    cvError.style.display = 'block';
+    return;
+  }
+ 
   const formData = new FormData(form);
   const payload = {};
   formData.forEach((value, key)=>{ payload[key] = value; });
+ 
+  // El input de archivo llega como objeto File dentro de formData; lo quitamos
+  // y en su lugar mandamos el contenido ya convertido a base64 (si el candidato adjuntó algo).
+  delete payload.cv_archivo;
+  if(cvFile){
+    payload.cv_nombre_archivo = cvFile.name;
+    payload.cv_tipo_archivo = cvFile.type;
+    payload.cv_base64 = await leerArchivoComoBase64(cvFile);
+  }
+ 
+  // Teléfono del candidato, capturado del link que le mandamos por WhatsApp (?tel=5215512345678)
+  const params = new URLSearchParams(window.location.search);
+  payload.telefono = params.get('tel') || '';
  
   form.style.display = 'none';
   document.getElementById('gauge').style.display = 'none';
