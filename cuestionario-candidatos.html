@@ -183,7 +183,7 @@
     content:"📎";
     font-size:16px;
   }
-  input[type=text],input[type=number],input[type=email],select,textarea{
+  input[type=text],input[type=number],input[type=email],input[type=tel],select,textarea{
     width:100%;
     padding:10px 12px;
     border:1px solid var(--line);
@@ -220,6 +220,66 @@
     background:var(--steel);
     border-color:var(--steel);
     color:var(--white);
+  }
+  /* Checkbox personalizado para el Aviso de Privacidad */
+  .privacidad-check{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .privacidad-check input{
+    position:absolute;
+    opacity:0;
+    width:0;
+    height:0;
+  }
+  .privacidad-check .box{
+    flex-shrink:0;
+    width:22px;
+    height:22px;
+    margin-top:1px;
+    border:2px solid var(--line);
+    border-radius:4px;
+    background:var(--white);
+    position:relative;
+    transition:all .15s ease;
+  }
+  .privacidad-check .box::after{
+    content:"";
+    position:absolute;
+    display:none;
+    left:6px;
+    top:2px;
+    width:6px;
+    height:11px;
+    border:solid var(--white);
+    border-width:0 2px 2px 0;
+    transform:rotate(45deg);
+  }
+  .privacidad-check input:checked + .box{
+    background:var(--steel);
+    border-color:var(--steel);
+  }
+  .privacidad-check input:checked + .box::after{
+    display:block;
+  }
+  .privacidad-check:hover .box{
+    border-color:var(--steel-light);
+  }
+  .privacidad-check input:focus-visible + .box{
+    outline:2px solid var(--ember);
+    outline-offset:2px;
+  }
+  .privacidad-check .texto{
+    font-size:13px;
+    font-weight:400;
+    color:var(--charcoal);
+    line-height:1.4;
+  }
+  .field.error .privacidad-check .box{
+    border-color:var(--danger);
   }
   .nav-buttons{
     display:flex;
@@ -396,6 +456,13 @@
       </div>
  
       <div class="field">
+        <label>Número de WhatsApp</label>
+        <input type="tel" name="telefono" id="telefonoInput" inputmode="numeric" maxlength="10" placeholder="10 dígitos, sin espacios" required>
+        <div class="hint">Es el número al que te contactaremos. Solo dígitos, sin lada de país ni guiones (ej. 2281234567).</div>
+        <div class="error-msg" id="errTelefono">Escribe tu número a 10 dígitos</div>
+      </div>
+ 
+      <div class="field">
         <label>Correo electrónico</label>
         <input type="email" name="email" required>
         <div class="error-msg">Escribe un correo válido</div>
@@ -514,12 +581,11 @@
       </div>
  
       <div class="field">
-        <label>¿Cuánto tiempo tardas en llegar a la sucursal desde tu domicilio?</label>
+        <label>¿Cuánto tiempo tardas en llegar a la sucursal seleccionada desde tu domicilio?</label>
         <div class="radio-group" data-name="tiempo_traslado">
           <div class="radio-opt"><input type="radio" name="tiempo_traslado" value="Menos de 30 min" id="tt1"><label for="tt1">Menos de 30 min</label></div>
           <div class="radio-opt"><input type="radio" name="tiempo_traslado" value="30 a 60 min" id="tt2"><label for="tt2">30 a 60 min</label></div>
           <div class="radio-opt"><input type="radio" name="tiempo_traslado" value="1 a 2 horas" id="tt3"><label for="tt3">1 a 2 horas</label></div>
-          <div class="radio-opt"><input type="radio" name="tiempo_traslado" value="Más de 2 horas" id="tt4"><label for="tt4">Más de 2 horas</label></div>
         </div>
         <div class="error-msg">Selecciona una opción</div>
       </div>
@@ -529,8 +595,7 @@
         <div class="radio-group" data-name="tiempo_ultimo_empleo">
           <div class="radio-opt"><input type="radio" name="tiempo_ultimo_empleo" value="Menos de 1 año" id="tue2"><label for="tue2">Menos de 1 año</label></div>
           <div class="radio-opt"><input type="radio" name="tiempo_ultimo_empleo" value="1 a 2 años" id="tue4"><label for="tue4">1 a 2 años</label></div>
-          <div class="radio-opt"><input type="radio" name="tiempo_ultimo_empleo" value="2 a 5 años" id="tue5"><label for="tue5">2 a 5 años</label></div>
-          <div class="radio-opt"><input type="radio" name="tiempo_ultimo_empleo" value="Más de 5 años" id="tue6"><label for="tue6">Más de 5 años</label></div>
+          <div class="radio-opt"><input type="radio" name="tiempo_ultimo_empleo" value="Más de 3 años" id="tue5"><label for="tue5">Más de 3 años</label></div>
         </div>
         <div class="error-msg">Selecciona una opción</div>
       </div>
@@ -588,8 +653,7 @@
             <div class="radio-opt"><input type="radio" name="exp_chofer" value="Sin experiencia" id="ec01"><label for="ec01">Sin experiencia</label></div>
             <div class="radio-opt"><input type="radio" name="exp_chofer" value="Menos de 1 año" id="ec02"><label for="ec02">Menos de 1 año</label></div>
             <div class="radio-opt"><input type="radio" name="exp_chofer" value="1 a 2 años" id="ec03"><label for="ec03">1 a 2 años</label></div>
-            <div class="radio-opt"><input type="radio" name="exp_chofer" value="3 a 5 años" id="ec04"><label for="ec04">3 a 5 años</label></div>
-            <div class="radio-opt"><input type="radio" name="exp_chofer" value="Más de 5 años" id="ec05"><label for="ec05">Más de 5 años</label></div>
+            <div class="radio-opt"><input type="radio" name="exp_chofer" value="Más de 3 años" id="ec04"><label for="ec04">Más de 3 años</label></div>
           </div>
         <div class="error-msg">Selecciona una opción</div>
         </div>
@@ -654,8 +718,7 @@
             <div class="radio-opt"><input type="radio" name="exp_almacen" value="Sin experiencia" id="ea0"><label for="ea0">Sin experiencia</label></div>
             <div class="radio-opt"><input type="radio" name="exp_almacen" value="Menos de 1 año" id="ea1"><label for="ea1">Menos de 1 año</label></div>
             <div class="radio-opt"><input type="radio" name="exp_almacen" value="1 a 2 años" id="ea2"><label for="ea2">1 a 2 años</label></div>
-            <div class="radio-opt"><input type="radio" name="exp_almacen" value="2 a 5 años" id="ea3"><label for="ea3">2 a 5 años</label></div>
-            <div class="radio-opt"><input type="radio" name="exp_almacen" value="Más de 5 años" id="ea4"><label for="ea4">Más de 5 años</label></div>
+            <div class="radio-opt"><input type="radio" name="exp_almacen" value="Más de 3 años" id="ea3"><label for="ea3">Más de 3 años</label></div>
           </div>
         <div class="error-msg">Selecciona una opción</div>
         </div>
@@ -739,8 +802,7 @@
             <div class="radio-opt"><input type="radio" name="opera_cortadora_banco" value="Sin experiencia" id="ocb0"><label for="ocb0">Sin experiencia</label></div>
             <div class="radio-opt"><input type="radio" name="opera_cortadora_banco" value="Menos de 1 año" id="ocb1"><label for="ocb1">Menos de 1 año</label></div>
             <div class="radio-opt"><input type="radio" name="opera_cortadora_banco" value="1 a 2 años" id="ocb2"><label for="ocb2">1 a 2 años</label></div>
-            <div class="radio-opt"><input type="radio" name="opera_cortadora_banco" value="2 a 5 años" id="ocb3"><label for="ocb3">2 a 5 años</label></div>
-            <div class="radio-opt"><input type="radio" name="opera_cortadora_banco" value="Más de 5 años" id="ocb4"><label for="ocb4">Más de 5 años</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_cortadora_banco" value="Más de 3 años" id="ocb3"><label for="ocb3">Más de 3 años</label></div>
           </div>
         <div class="error-msg">Selecciona una opción</div>
         </div>
@@ -749,8 +811,7 @@
             <div class="radio-opt"><input type="radio" name="opera_soplete" value="Sin experiencia" id="osp0"><label for="osp0">Sin experiencia</label></div>
             <div class="radio-opt"><input type="radio" name="opera_soplete" value="Menos de 1 año" id="osp1"><label for="osp1">Menos de 1 año</label></div>
             <div class="radio-opt"><input type="radio" name="opera_soplete" value="1 a 2 años" id="osp2"><label for="osp2">1 a 2 años</label></div>
-            <div class="radio-opt"><input type="radio" name="opera_soplete" value="2 a 5 años" id="osp3"><label for="osp3">2 a 5 años</label></div>
-            <div class="radio-opt"><input type="radio" name="opera_soplete" value="Más de 5 años" id="osp4"><label for="osp4">Más de 5 años</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_soplete" value="Más de 3 años" id="osp3"><label for="osp3">Más de 3 años</label></div>
           </div>
         <div class="error-msg">Selecciona una opción</div>
         </div>
@@ -781,10 +842,10 @@
         </div>
         <div class="field"><label>Años operando grúa</label>
           <div class="radio-group" data-name="anos_grua">
+            <div class="radio-opt"><input type="radio" name="anos_grua" value="Sin experiencia" id="ag0"><label for="ag0">Sin experiencia</label></div>
             <div class="radio-opt"><input type="radio" name="anos_grua" value="Menos de 1 año" id="ag1"><label for="ag1">Menos de 1 año</label></div>
-            <div class="radio-opt"><input type="radio" name="anos_grua" value="1 a 3 años" id="ag2"><label for="ag2">1 a 3 años</label></div>
-            <div class="radio-opt"><input type="radio" name="anos_grua" value="3 a 5 años" id="ag3"><label for="ag3">3 a 5 años</label></div>
-            <div class="radio-opt"><input type="radio" name="anos_grua" value="Más de 5 años" id="ag4"><label for="ag4">Más de 5 años</label></div>
+            <div class="radio-opt"><input type="radio" name="anos_grua" value="1 a 2 años" id="ag2"><label for="ag2">1 a 2 años</label></div>
+            <div class="radio-opt"><input type="radio" name="anos_grua" value="Más de 3 años" id="ag3"><label for="ag3">Más de 3 años</label></div>
           </div>
         <div class="error-msg">Selecciona una opción</div>
         </div>
@@ -810,8 +871,7 @@
             <div class="radio-opt"><input type="radio" name="opera_troqueladora" value="Sin experiencia" id="ot0"><label for="ot0">Sin experiencia</label></div>
             <div class="radio-opt"><input type="radio" name="opera_troqueladora" value="Menos de 1 año" id="ot1"><label for="ot1">Menos de 1 año</label></div>
             <div class="radio-opt"><input type="radio" name="opera_troqueladora" value="1 a 2 años" id="ot2"><label for="ot2">1 a 2 años</label></div>
-            <div class="radio-opt"><input type="radio" name="opera_troqueladora" value="2 a 5 años" id="ot3"><label for="ot3">2 a 5 años</label></div>
-            <div class="radio-opt"><input type="radio" name="opera_troqueladora" value="Más de 5 años" id="ot4"><label for="ot4">Más de 5 años</label></div>
+            <div class="radio-opt"><input type="radio" name="opera_troqueladora" value="Más de 3 años" id="ot3"><label for="ot3">Más de 3 años</label></div>
           </div>
         <div class="error-msg">Selecciona una opción</div>
         </div>
@@ -820,8 +880,7 @@
             <div class="radio-opt"><input type="radio" name="exp_tiras_cortina" value="Sin experiencia" id="etc0"><label for="etc0">Sin experiencia</label></div>
             <div class="radio-opt"><input type="radio" name="exp_tiras_cortina" value="Menos de 1 año" id="etc1"><label for="etc1">Menos de 1 año</label></div>
             <div class="radio-opt"><input type="radio" name="exp_tiras_cortina" value="1 a 2 años" id="etc2"><label for="etc2">1 a 2 años</label></div>
-            <div class="radio-opt"><input type="radio" name="exp_tiras_cortina" value="2 a 5 años" id="etc3"><label for="etc3">2 a 5 años</label></div>
-            <div class="radio-opt"><input type="radio" name="exp_tiras_cortina" value="Más de 5 años" id="etc4"><label for="etc4">Más de 5 años</label></div>
+            <div class="radio-opt"><input type="radio" name="exp_tiras_cortina" value="Más de 3 años" id="etc3"><label for="etc3">Más de 3 años</label></div>
           </div>
         <div class="error-msg">Selecciona una opción</div>
         </div>
@@ -851,10 +910,10 @@
         </div>
         <div class="field"><label>¿Cuántos años llevas operando montacargas?</label>
           <div class="radio-group" data-name="anos_montacargas">
+            <div class="radio-opt"><input type="radio" name="anos_montacargas" value="Sin experiencia" id="amo0"><label for="amo0">Sin experiencia</label></div>
             <div class="radio-opt"><input type="radio" name="anos_montacargas" value="Menos de 1 año" id="amo1"><label for="amo1">Menos de 1 año</label></div>
-            <div class="radio-opt"><input type="radio" name="anos_montacargas" value="1 a 3 años" id="amo2"><label for="amo2">1 a 3 años</label></div>
-            <div class="radio-opt"><input type="radio" name="anos_montacargas" value="3 a 5 años" id="amo3"><label for="amo3">3 a 5 años</label></div>
-            <div class="radio-opt"><input type="radio" name="anos_montacargas" value="Más de 5 años" id="amo4"><label for="amo4">Más de 5 años</label></div>
+            <div class="radio-opt"><input type="radio" name="anos_montacargas" value="1 a 2 años" id="amo2"><label for="amo2">1 a 2 años</label></div>
+            <div class="radio-opt"><input type="radio" name="anos_montacargas" value="Más de 3 años" id="amo3"><label for="amo3">Más de 3 años</label></div>
           </div>
         <div class="error-msg">Selecciona una opción</div>
         </div>
@@ -905,18 +964,21 @@
         <details style="margin-bottom:10px;">
           <summary style="cursor:pointer;font-size:13px;color:var(--steel);font-weight:600;">Ver Aviso de Privacidad</summary>
           <p class="hint" style="margin-top:8px;line-height:1.5;">
-            PYLSA ACERO, con domicilio en Veracruz, México, es responsable del tratamiento de tus datos personales.
-            Los datos que nos compartes en este formulario (nombre, contacto, domicilio, historial laboral y, en su
-            caso, tu CV) se usan únicamente para evaluar tu postulación a una vacante y contactarte en caso de ser
-            candidato viable. No se comparten con terceros ajenos al proceso de reclutamiento. Puedes ejercer tus
-            derechos de acceso, rectificación, cancelación u oposición (derechos ARCO) escribiendo a
-            drodriguez@pylsa.com.
+            Comercializadora Punta del Golfo, S.A. de C.V., operando bajo el nombre comercial "PYLSA ACERO",
+            con domicilio en San Juan Bautista Tuxtepec, Oaxaca, es responsable del tratamiento de tus datos
+            personales. Los datos que nos compartes en este formulario (nombre, contacto, domicilio, historial
+            laboral y, en su caso, tu CV) se usan únicamente para evaluar tu postulación a una vacante y
+            contactarte en caso de ser candidato viable. No se comparten con terceros ajenos al proceso de
+            reclutamiento. Puedes ejercer tus derechos de acceso, rectificación, cancelación u oposición
+            (derechos ARCO) escribiendo a quejas@pylsa.com.
           </p>
         </details>
-        <div class="radio-opt" style="display:flex;align-items:flex-start;gap:8px;">
-          <input type="checkbox" name="acepta_aviso_privacidad" id="chkPrivacidad" value="Sí" required style="width:auto;margin-top:3px;">
-          <label for="chkPrivacidad" style="font-size:13px;font-weight:400;">He leído y acepto el Aviso de Privacidad, y autorizo el uso de mis datos personales para este proceso de reclutamiento.</label>
-        </div>
+ 
+        <label class="privacidad-check">
+          <input type="checkbox" name="acepta_aviso_privacidad" id="chkPrivacidad" value="Sí" required>
+          <span class="box"></span>
+          <span class="texto">He leído y acepto el Aviso de Privacidad, y autorizo el uso de mis datos personales para este proceso de reclutamiento.</span>
+        </label>
         <div class="error-msg" id="errPrivacidad" style="display:none;">Debes aceptar el Aviso de Privacidad para continuar</div>
       </div>
  
@@ -1043,6 +1105,12 @@ document.querySelectorAll('input[type="text"], textarea').forEach(el=>{
   });
 });
  
+// Teléfono: solo permitir dígitos, máximo 10
+const telefonoInput = document.getElementById('telefonoInput');
+telefonoInput.addEventListener('input', ()=>{
+  telefonoInput.value = telefonoInput.value.replace(/\D/g, '').slice(0, 10);
+});
+ 
 let currentStep = 1;
 const totalSteps = 4;
 const form = document.getElementById('candidatoForm');
@@ -1072,6 +1140,14 @@ function validateStep(stepEl){
     const requiredInput = field.querySelector('input[required], select[required]');
     const radioGroup = field.querySelector('.radio-group');
     field.classList.remove('error');
+ 
+    if(requiredInput && requiredInput.id === 'telefonoInput'){
+      if(requiredInput.value.length !== 10){
+        field.classList.add('error');
+        valid = false;
+      }
+      return;
+    }
  
     if(requiredInput){
       if(!requiredInput.value.trim()){
@@ -1350,9 +1426,13 @@ form.addEventListener('submit', async (e)=>{
     payload.cv_base64 = await leerArchivoComoBase64(cvFile);
   }
  
-  // Teléfono del candidato, capturado del link que le mandamos por WhatsApp (?tel=5215512345678)
+  // Teléfono del candidato: si llega desde un link de WhatsApp (?tel=5215512345678) se
+  // respeta ese valor; si no, se usa el número que el candidato escribió en el formulario,
+  // anteponiendo "521" — el mismo prefijo que ya usa tu flujo de WhatsApp/Wassenger para
+  // números mexicanos (data.fromNumber.replace(/[^0-9]/g, '') siempre llega con 521 + 10 dígitos).
   const params = new URLSearchParams(window.location.search);
-  payload.telefono = params.get('tel') || '';
+  const telURL = params.get('tel');
+  payload.telefono = telURL ? telURL : ('521' + payload.telefono);
  
   const submitBtn = form.querySelector('.btn-submit');
   submitBtn.disabled = true;
