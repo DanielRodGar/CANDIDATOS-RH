@@ -115,6 +115,13 @@
     padding-left:10px;
   }
   .field{margin-bottom:18px;}
+  .field-row-3{
+    display:grid;
+    grid-template-columns:repeat(3, minmax(0, 1fr));
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .field-row-3 .field{margin-bottom:0;}
   label{
     display:block;
     font-size:13px;
@@ -126,6 +133,55 @@
     font-size:12px;
     color:var(--slate);
     margin-top:4px;
+  }
+  .cv-callout{
+    display:flex;
+    gap:12px;
+    align-items:flex-start;
+    background:#FBEDE7;
+    border:1px solid var(--ember);
+    border-left:4px solid var(--ember);
+    border-radius:6px;
+    padding:14px 16px;
+    margin-bottom:12px;
+  }
+  .cv-callout-icon{
+    font-size:22px;
+    line-height:1;
+    flex-shrink:0;
+  }
+  .cv-callout-text strong{
+    display:block;
+    font-size:14px;
+    color:var(--charcoal);
+    margin-bottom:4px;
+  }
+  .cv-callout-text p{
+    font-size:13px;
+    color:var(--steel);
+    margin:0;
+    line-height:1.4;
+  }
+  .cv-upload-label{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--steel);
+    color:var(--white);
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    padding:11px 18px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:background 0.15s ease;
+  }
+  .cv-upload-label:hover{
+    background:var(--charcoal);
+  }
+  .cv-upload-label:before{
+    content:"📎";
+    font-size:16px;
   }
   input[type=text],input[type=number],input[type=email],select,textarea{
     width:100%;
@@ -211,6 +267,32 @@
     padding:0;
   }
   .success-screen p{color:var(--slate);font-size:14px;}
+  .error-screen{
+    display:none;
+    padding:48px 32px;
+    text-align:center;
+  }
+  .error-screen.active{display:block;}
+  .error-screen h2{
+    font-family:'Oswald',sans-serif;
+    color:var(--danger);
+    text-transform:uppercase;
+    border:none;
+    padding:0;
+  }
+  .error-screen p{color:var(--slate);font-size:14px;margin-bottom:20px;}
+  .btn-retry{
+    background:var(--ember);
+    color:var(--white);
+    border:none;
+    padding:12px 28px;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    border-radius:6px;
+    cursor:pointer;
+  }
+  .btn-retry:hover{background:#a4432a;}
   .loading{
     display:none;
     text-align:center;
@@ -248,16 +330,30 @@
     <div class="step active" data-step="1">
       <h2>Datos personales</h2>
  
-      <div class="field">
-        <label>Nombre completo</label>
-        <input type="text" name="nombre" required>
-        <div class="error-msg">Este campo es obligatorio</div>
+      <div class="field-row-3">
+        <div class="field">
+          <label>Nombre(s)</label>
+          <input type="text" name="nombre_pila" required>
+          <div class="error-msg">Obligatorio</div>
+        </div>
+ 
+        <div class="field">
+          <label>Apellido paterno</label>
+          <input type="text" name="apellido_paterno" required>
+          <div class="error-msg">Obligatorio</div>
+        </div>
+ 
+        <div class="field">
+          <label>Apellido materno</label>
+          <input type="text" name="apellido_materno" required>
+          <div class="error-msg">Obligatorio</div>
+        </div>
       </div>
  
       <div class="field">
         <label>Edad</label>
-        <input type="number" name="edad" min="16" max="80" required>
-        <div class="error-msg">Escribe una edad válida</div>
+        <input type="number" name="edad" min="18" max="80" required>
+        <div class="error-msg">Debes tener entre 18 y 80 años</div>
       </div>
  
       <div class="field">
@@ -440,6 +536,21 @@
       </div>
  
       <div class="field">
+        <label>¿Cómo se llama la última empresa en la que trabajaste?</label>
+        <input type="text" name="ultima_empresa" required>
+        <div class="error-msg">Escribe el nombre de la empresa</div>
+      </div>
+ 
+      <div class="field">
+        <label>¿Tienes experiencia previa en el ramo del acero o la ferretería?</label>
+        <div class="radio-group" data-name="conoce_acero">
+          <div class="radio-opt"><input type="radio" name="conoce_acero" value="Sí" id="con1"><label for="con1">Sí</label></div>
+          <div class="radio-opt"><input type="radio" name="conoce_acero" value="No" id="con2"><label for="con2">No</label></div>
+        </div>
+        <div class="error-msg">Selecciona una opción</div>
+      </div>
+ 
+      <div class="field">
         <label>¿Por qué motivo dejaste tu último empleo?</label>
         <div class="radio-group" data-name="motivo_salida_ultimo_empleo">
           <div class="radio-opt"><input type="radio" name="motivo_salida_ultimo_empleo" value="Terminó mi contrato o temporada" id="ms1"><label for="ms1">Terminó mi contrato o temporada</label></div>
@@ -507,12 +618,12 @@
           </div>
         <div class="error-msg">Selecciona una opción</div>
         </div>
-        <div class="field"><label>¿Experiencia con remolque?</label>
-          <div class="hint" style="margin-bottom:6px;">Solo si aplicaste a Chofer 1 Ton</div>
+        <div id="subBloqueRemolque" class="field"><label>¿Experiencia con remolque?</label>
           <div class="radio-group" data-name="remolque">
             <div class="radio-opt"><input type="radio" name="remolque" value="Sí" id="rm1"><label for="rm1">Sí</label></div>
             <div class="radio-opt"><input type="radio" name="remolque" value="No" id="rm2"><label for="rm2">No</label></div>
           </div>
+        <div class="error-msg">Selecciona una opción</div>
         </div>
         <div class="field"><label>¿Multas vigentes?</label>
           <div class="radio-group" data-name="multas">
@@ -568,13 +679,6 @@
         <div class="field"><label>Años de experiencia</label>
           <input type="number" name="anos_atencion_cliente" min="0">
           <div class="hint">Solo si tienes experiencia</div>
-        </div>
-        <div class="field"><label>¿Conoces acero / ferretería?</label>
-          <div class="radio-group" data-name="conoce_acero">
-            <div class="radio-opt"><input type="radio" name="conoce_acero" value="Sí" id="con1"><label for="con1">Sí</label></div>
-            <div class="radio-opt"><input type="radio" name="conoce_acero" value="No" id="con2"><label for="con2">No</label></div>
-          </div>
-        <div class="error-msg">Selecciona una opción</div>
         </div>
         <div class="field"><label>Nivel de computación</label>
           <div class="radio-group" data-name="nivel_pc">
@@ -673,6 +777,7 @@
             <div class="radio-opt"><input type="radio" name="cert_grua" value="Sí" id="cg1"><label for="cg1">Sí</label></div>
             <div class="radio-opt"><input type="radio" name="cert_grua" value="No" id="cg2"><label for="cg2">No</label></div>
           </div>
+        <div class="error-msg">Selecciona una opción</div>
         </div>
         <div class="field"><label>Años operando grúa</label>
           <div class="radio-group" data-name="anos_grua">
@@ -782,11 +887,37 @@
       </div>
  
       <div class="field">
-        <label>Adjunta tu CV o solicitud de empleo (opcional)</label>
-        <div class="hint" style="margin-bottom:8px;">Formatos permitidos: PDF, Word o imagen. Máximo 5 MB.</div>
-        <input type="file" name="cv_archivo" id="cvInput" accept=".pdf,.doc,.docx,image/*">
+        <div class="cv-callout">
+          <div class="cv-callout-icon">⭐</div>
+          <div class="cv-callout-text">
+            <strong>Aumenta tus posibilidades de que te llamemos a entrevista</strong>
+            <p>Adjuntar tu CV o solicitud de empleo es opcional, pero los candidatos que lo hacen tienen más probabilidades de ser contactados para una entrevista.</p>
+          </div>
+        </div>
+        <label class="cv-upload-label" for="cvInput">Seleccionar archivo</label>
+        <input type="file" name="cv_archivo" id="cvInput" accept=".pdf,.doc,.docx,image/*" style="display:none;">
+        <div class="hint" style="margin-top:8px;">Formatos permitidos: PDF, Word o imagen. Máximo 5 MB.</div>
         <div class="hint" id="cvNombreArchivo" style="margin-top:6px;"></div>
         <div class="error-msg" id="cvError" style="display:none;">El archivo debe pesar menos de 5 MB</div>
+      </div>
+ 
+      <div class="field" id="bloquePrivacidad">
+        <details style="margin-bottom:10px;">
+          <summary style="cursor:pointer;font-size:13px;color:var(--steel);font-weight:600;">Ver Aviso de Privacidad</summary>
+          <p class="hint" style="margin-top:8px;line-height:1.5;">
+            PYLSA ACERO, con domicilio en Veracruz, México, es responsable del tratamiento de tus datos personales.
+            Los datos que nos compartes en este formulario (nombre, contacto, domicilio, historial laboral y, en su
+            caso, tu CV) se usan únicamente para evaluar tu postulación a una vacante y contactarte en caso de ser
+            candidato viable. No se comparten con terceros ajenos al proceso de reclutamiento. Puedes ejercer tus
+            derechos de acceso, rectificación, cancelación u oposición (derechos ARCO) escribiendo a
+            drodriguez@pylsa.com.
+          </p>
+        </details>
+        <div class="radio-opt" style="display:flex;align-items:flex-start;gap:8px;">
+          <input type="checkbox" name="acepta_aviso_privacidad" id="chkPrivacidad" value="Sí" required style="width:auto;margin-top:3px;">
+          <label for="chkPrivacidad" style="font-size:13px;font-weight:400;">He leído y acepto el Aviso de Privacidad, y autorizo el uso de mis datos personales para este proceso de reclutamiento.</label>
+        </div>
+        <div class="error-msg" id="errPrivacidad" style="display:none;">Debes aceptar el Aviso de Privacidad para continuar</div>
       </div>
  
       <div class="nav-buttons">
@@ -802,6 +933,12 @@
   <div class="success-screen" id="successScreen">
     <h2>¡Listo!</h2>
     <p>Recibimos tu información correctamente. En breve nos pondremos en contacto contigo.</p>
+  </div>
+ 
+  <div class="error-screen" id="errorScreen">
+    <h2>No se pudo enviar</h2>
+    <p>Hubo un problema al mandar tu información. No se perdió lo que ya llenaste — puedes intentar de nuevo.</p>
+    <button type="button" class="btn-retry" id="btnRetry">Reintentar envío</button>
   </div>
 </div>
  
@@ -895,6 +1032,17 @@ const PUESTOS_POR_SUCURSAL = {
   "San Andrés Cholula — San Francisco Acatepec":    ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón"]
 };
  
+// Forzar mayúsculas en todos los campos de texto libre (nombre, domicilio, última empresa, etc.)
+// El correo se deja tal cual lo escribe el candidato.
+document.querySelectorAll('input[type="text"], textarea').forEach(el=>{
+  el.addEventListener('input', ()=>{
+    const start = el.selectionStart;
+    const end = el.selectionEnd;
+    el.value = el.value.toUpperCase();
+    if(start !== null && end !== null) el.setSelectionRange(start, end);
+  });
+});
+ 
 let currentStep = 1;
 const totalSteps = 4;
 const form = document.getElementById('candidatoForm');
@@ -929,6 +1077,14 @@ function validateStep(stepEl){
       if(!requiredInput.value.trim()){
         field.classList.add('error');
         valid = false;
+      } else if(requiredInput.type === 'number'){
+        const num = Number(requiredInput.value);
+        const min = requiredInput.min !== '' ? Number(requiredInput.min) : null;
+        const max = requiredInput.max !== '' ? Number(requiredInput.max) : null;
+        if(Number.isNaN(num) || (min !== null && num < min) || (max !== null && num > max)){
+          field.classList.add('error');
+          valid = false;
+        }
       }
     } else if(radioGroup && !radioGroup.closest('.field').querySelector('input:not([required])')?.hasAttribute('data-optional')){
       const name = radioGroup.dataset.name;
@@ -1062,6 +1218,20 @@ puestoSelect.addEventListener('change', ()=>{
   if(CHOFERES.includes(puesto)){
     bloques.chofer.style.display = 'block';
     setRequiredInBlock(bloques.chofer, true);
+ 
+    // "Experiencia con remolque" solo aplica a Chofer 1 Ton
+    const subRemolque = document.getElementById('subBloqueRemolque');
+    const remolqueErrMsg = subRemolque.querySelector('.error-msg');
+    const remolqueGroup = subRemolque.querySelector('.radio-group');
+    if(puesto === 'Chofer 1 Ton'){
+      subRemolque.style.display = '';
+      remolqueErrMsg.style.display = '';
+      remolqueGroup.dataset.required = 'true';
+    } else {
+      subRemolque.style.display = 'none';
+      remolqueErrMsg.style.display = 'none';
+      remolqueGroup.dataset.required = 'false';
+    }
   } else if(puesto === 'Auxiliar de Almacén'){
     bloques.almacen.style.display = 'block';
     setRequiredInBlock(bloques.almacen, true);
@@ -1106,6 +1276,17 @@ function validateStep4(){
       }
     }
   });
+ 
+  // Validar aceptación del Aviso de Privacidad
+  const chkPrivacidad = document.getElementById('chkPrivacidad');
+  const errPrivacidad = document.getElementById('errPrivacidad');
+  if(!chkPrivacidad.checked){
+    errPrivacidad.style.display = 'block';
+    valid = false;
+  } else {
+    errPrivacidad.style.display = 'none';
+  }
+ 
   return valid;
 }
  
@@ -1151,6 +1332,15 @@ form.addEventListener('submit', async (e)=>{
   const payload = {};
   formData.forEach((value, key)=>{ payload[key] = value; });
  
+  // Se piden por separado (nombre, apellido paterno, apellido materno) para obligar
+  // a que el candidato ponga su nombre completo real, pero se combinan en un solo
+  // campo "nombre" porque así es como lo espera el backend de n8n / la hoja de Sheets.
+  payload.nombre = [payload.nombre_pila, payload.apellido_paterno, payload.apellido_materno]
+    .filter(Boolean).join(' ').trim();
+  delete payload.nombre_pila;
+  delete payload.apellido_paterno;
+  delete payload.apellido_materno;
+ 
   // El input de archivo llega como objeto File dentro de formData; lo quitamos
   // y en su lugar mandamos el contenido ya convertido a base64 (si el candidato adjuntó algo).
   delete payload.cv_archivo;
@@ -1164,6 +1354,9 @@ form.addEventListener('submit', async (e)=>{
   const params = new URLSearchParams(window.location.search);
   payload.telefono = params.get('tel') || '';
  
+  const submitBtn = form.querySelector('.btn-submit');
+  submitBtn.disabled = true;
+ 
   form.style.display = 'none';
   document.getElementById('gauge').style.display = 'none';
   document.getElementById('loadingScreen').classList.add('active');
@@ -1175,14 +1368,22 @@ form.addEventListener('submit', async (e)=>{
       body: JSON.stringify(payload)
     });
     document.getElementById('loadingScreen').classList.remove('active');
+    if(!res.ok){
+      throw new Error('El webhook respondió con estatus ' + res.status);
+    }
     document.getElementById('successScreen').classList.add('active');
   }catch(err){
     document.getElementById('loadingScreen').classList.remove('active');
-    document.getElementById('successScreen').classList.add('active');
-    document.querySelector('#successScreen h2').textContent = 'Recibido';
-    document.querySelector('#successScreen p').textContent = 'Tu información se registró. Si tienes dudas, contáctanos directamente.';
+    document.getElementById('errorScreen').classList.add('active');
+    submitBtn.disabled = false;
     console.error('Error enviando formulario', err);
   }
+});
+ 
+document.getElementById('btnRetry').addEventListener('click', ()=>{
+  document.getElementById('errorScreen').classList.remove('active');
+  document.getElementById('gauge').style.display = '';
+  form.style.display = '';
 });
 </script>
  
