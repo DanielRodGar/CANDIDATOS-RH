@@ -1452,6 +1452,7 @@ form.addEventListener('submit', async (e)=>{
       throw new Error('El webhook respondió con estatus ' + res.status);
     }
     document.getElementById('successScreen').classList.add('active');
+    form.reset();
   }catch(err){
     document.getElementById('loadingScreen').classList.remove('active');
     document.getElementById('errorScreen').classList.add('active');
