@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -502,7 +503,6 @@
           <option>Oaxaca</option>
           <option>Yucatán</option>
           <option>Quintana Roo</option>
-          <option>Puebla</option>
         </select>
         <div class="error-msg">Selecciona un estado</div>
       </div>
@@ -1018,12 +1018,11 @@ const SUCURSALES = {
     "Córdoba — Zona Industrial","Córdoba — Col. Centro","Orizaba — Col. Centro","Orizaba — Col. Abelardo L. Rodríguez",
     "San Andrés Tuxtla — El Rodeo","San Andrés Tuxtla — Col. 3 de Mayo","Tierra Blanca — Col. Hoja del Maíz","Poza Rica — Jardines de Poza Rica"
   ],
-  "Tabasco": ["Comalcalco — Col. Santa Amalia Zona Industrial","Cárdenas — Carretera km 1.6","Villahermosa — Atasta","Villahermosa — Ciudad Industrial"],
-  "Chiapas": ["Tuxtla Gutiérrez — San José Terán","Tuxtla Gutiérrez — Col. Centro Norte","Tuxtla Gutiérrez — Loma Larga"],
+  "Tabasco": ["Comalcalco — Col. Santa Amalia Zona Industrial","Cárdenas — Carretera km 1.6","Villahermosa — Atasta","Villahermosa — Ciudad Industrial","Huimanguillo — Col. El Desecho"],
+  "Chiapas": ["Tuxtla Gutiérrez — San José Terán","Tuxtla Gutiérrez — Col. Centro Norte","Tuxtla Gutiérrez — Loma Larga","Palenque — Col. Magisterial"],
   "Oaxaca": ["Tuxtepec — Santa Fe","Tuxtepec — Col. del Carmen"],
   "Yucatán": ["Mérida — Ciudad Industrial","Mérida — Sambulá","Mérida — El Porvenir","Mérida — Sta. María Chuburná"],
-  "Quintana Roo": ["Cancún — Supermanzana 102","Playa del Carmen — Gonzalo Guerrero"],
-  "Puebla": ["San Andrés Cholula — San Francisco Acatepec"]
+  "Quintana Roo": ["Cancún — Supermanzana 102","Playa del Carmen — Gonzalo Guerrero"]
 };
  
 // Veracruz es donde tenemos más tiendas, así que ahí se pregunta primero el municipio
@@ -1075,10 +1074,12 @@ const PUESTOS_POR_SUCURSAL = {
   "Cárdenas — Carretera km 1.6":                    ["Cajera / Administrativa","Mostrador","Chofer 3.5 Tons","Chofer 1 Ton","Cortador","Auxiliar de Almacén"],
   "Villahermosa — Atasta":                          ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Cortador","Auxiliar de Almacén"],
   "Villahermosa — Ciudad Industrial":               ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer Rabón","Cortador","Auxiliar de Almacén"],
+  "Huimanguillo — Col. El Desecho":                 ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Cortador"],
   // Chiapas
   "Tuxtla Gutiérrez — San José Terán":              ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Cortador","Auxiliar de Almacén"],
   "Tuxtla Gutiérrez — Col. Centro Norte":           ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Cortador","Auxiliar de Almacén"],
   "Tuxtla Gutiérrez — Loma Larga":                  ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón","Auxiliar de Almacén","Cortador"],
+  "Palenque — Col. Magisterial":                    ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón","Auxiliar de Almacén","Cortador"],
   // Oaxaca
   "Tuxtepec — Santa Fe":                            ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Auxiliar de Almacén","Cortador"],
   "Tuxtepec — Col. del Carmen":                     ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer Rabón","Auxiliar de Almacén","Cortador","Montacarguista"],
@@ -1089,9 +1090,7 @@ const PUESTOS_POR_SUCURSAL = {
   "Mérida — Sta. María Chuburná":                   ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Auxiliar de Almacén"],
   // Quintana Roo
   "Cancún — Supermanzana 102":                      ["Cajera / Administrativa","Mostrador","Cortador","Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón"],
-  "Playa del Carmen — Gonzalo Guerrero":            ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Auxiliar de Almacén"],
-  // Puebla
-  "San Andrés Cholula — San Francisco Acatepec":    ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Chofer 3.5 Tons","Chofer Rabón"]
+  "Playa del Carmen — Gonzalo Guerrero":            ["Cajera / Administrativa","Mostrador","Chofer 1 Ton","Auxiliar de Almacén"]
 };
  
 // Forzar mayúsculas en todos los campos de texto libre (nombre, domicilio, última empresa, etc.)
